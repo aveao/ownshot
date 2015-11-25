@@ -1,0 +1,30 @@
+c:\users\ardao\documents\visual studio 2015\Projects\ownshot\ownshot\bin\Debug\ownshot.exe.config
+c:\users\ardao\documents\visual studio 2015\Projects\ownshot\ownshot\bin\Debug\ownshot.exe
+c:\users\ardao\documents\visual studio 2015\Projects\ownshot\ownshot\bin\Debug\ownshot.pdb
+c:\users\ardao\documents\visual studio 2015\Projects\ownshot\ownshot\obj\Debug\ownshot.csprojResolveAssemblyReference.cache
+c:\users\ardao\documents\visual studio 2015\Projects\ownshot\ownshot\obj\Debug\MainWindow.g.cs
+c:\users\ardao\documents\visual studio 2015\Projects\ownshot\ownshot\obj\Debug\App.g.cs
+c:\users\ardao\documents\visual studio 2015\Projects\ownshot\ownshot\obj\Debug\ownshot_MarkupCompile.cache
+c:\users\ardao\documents\visual studio 2015\Projects\ownshot\ownshot\obj\Debug\ownshot_MarkupCompile.lref
+c:\users\ardao\documents\visual studio 2015\Projects\ownshot\ownshot\obj\Debug\MainWindow.baml
+c:\users\ardao\documents\visual studio 2015\Projects\ownshot\ownshot\obj\Debug\ownshot.g.resources
+c:\users\ardao\documents\visual studio 2015\Projects\ownshot\ownshot\obj\Debug\ownshot.Properties.Resources.resources
+c:\users\ardao\documents\visual studio 2015\Projects\ownshot\ownshot\obj\Debug\ownshot.csproj.GenerateResource.Cache
+c:\users\ardao\documents\visual studio 2015\Projects\ownshot\ownshot\obj\Debug\ownshot.exe
+c:\users\ardao\documents\visual studio 2015\Projects\ownshot\ownshot\obj\Debug\ownshot.pdb
+C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\bin\Debug\ownshot.exe.config
+C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\ownshot.exe
+C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\ownshot.pdb
+C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\bin\Debug\ownshot.exe
+C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\bin\Debug\ownshot.pdb
+C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\ownshot.csprojResolveAssemblyReference.cache
+C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\MainWindow.g.cs
+C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\partofscreen.g.cs
+C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\App.g.cs
+C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\ownshot_MarkupCompile.cache
+C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\ownshot_MarkupCompile.lref
+C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\MainWindow.baml
+C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\partofscreen.baml
+C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\ownshot.g.resources
+C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\ownshot.Properties.Resources.resources
+C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\ownshot.csproj.GenerateResource.Cache
