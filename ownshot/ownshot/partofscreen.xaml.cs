@@ -46,7 +46,11 @@ namespace ownshot
             image.Source = new BitmapImage(new Uri(ScreenPath));
 
             selectionRectangle.MouseUp += image1_MouseLeftButtonUp;
+            selectionRectangle.MouseDown += image1_MouseLeftButtonDown;
+            selectionRectangle.MouseMove += image1_MouseMove;
             BackPanel.MouseUp += image1_MouseLeftButtonUp;
+            BackPanel.MouseDown += image1_MouseLeftButtonDown;
+            BackPanel.MouseMove += image1_MouseMove;
             image.MouseUp += image1_MouseLeftButtonUp;
             image.MouseDown += image1_MouseLeftButtonDown;
             image.MouseMove += image1_MouseMove;
