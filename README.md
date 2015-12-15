@@ -10,3 +10,7 @@ On the "var request = (FtpWebRequest)WebRequest.Create("ftp://ardao.me/%2F/var/w
 On the "request.Credentials = new NetworkCredential("ardaoftp", File.ReadAllText("C:\\ftppass.txt"));" line, change ardaoftp with your FTP username and create a file in C, with the name "ftppass.txt", and put your password in it.
 
 On the "var link = "http://ardao.me/files/" + new string(stringChars) + ".png";" line, change the http://ardao.me/files/ part to your own server's link and folder.
+
+###How can I use this? 
+
+Ctrl+Shift+4 to get a fullscreen screenshot, Ctrl+Shift+6 to crop a part of screen.
