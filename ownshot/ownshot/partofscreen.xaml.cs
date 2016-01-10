@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
@@ -140,7 +140,7 @@ namespace ownshot
             };
 
             var chars = "abcdefghijklmnopqrstuvwxyz0123456789"; //ABCDEFGHIJKLMNOPQRSTUVWXYZ
-            var stringChars = new char[3];
+            var stringChars = new char[MainWindow.ssnamelength];
             var random = new Random();
 
             for (int i = 0; i < stringChars.Length; i++)
@@ -148,9 +148,9 @@ namespace ownshot
                 stringChars[i] = chars[random.Next(chars.Length)];
             }
 
-            var finalString = new String(stringChars) + "_pre";
+            var finalString = new string(stringChars) + "_pre";
 
-            ScreenPath = Directory.GetCurrentDirectory() + "\\" + finalString + ".png";
+            ScreenPath = finalString + ".png";
             curname = finalString;
 
             this.WindowState = WindowState.Minimized;
@@ -169,14 +169,14 @@ namespace ownshot
             this.WindowState = WindowState.Normal;
         }
 
-        void uppic(string imgname)
+        void uppic(string finalString)
         {
             try
             {
-                var request = (FtpWebRequest)WebRequest.Create("ftp://ardao.me/%2F/var/www/ardaome/public_html/files/" + imgname + ".png");
+                var request = (FtpWebRequest)WebRequest.Create(File.ReadAllText("ftpdir.txt").Replace("imagename", finalString));
                 request.Method = WebRequestMethods.Ftp.UploadFile;
 
-                request.Credentials = new NetworkCredential("ardaoftp", File.ReadAllText("C:\\ftppass.txt"));
+                request.Credentials = new NetworkCredential(File.ReadAllText("ftpuser.txt"), File.ReadAllText("ftppass.txt"));
 
                 var fileContents = File.ReadAllBytes(ScreenPath);
                 request.ContentLength = fileContents.Length;
@@ -185,7 +185,7 @@ namespace ownshot
                 requestStream.Write(fileContents, 0, fileContents.Length);
                 requestStream.Close();
 
-                var link = "http://ardao.me/files/" + imgname + ".png";
+                var link = File.ReadAllText("serverlink.txt").Replace("imagename", finalString);
 
                 var response = (FtpWebResponse)request.GetResponse();
                 referring.Title = link;
