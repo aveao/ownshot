@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -28,24 +28,29 @@ namespace ownshot
     public partial class MainWindow : Window
     {
         string ScreenPath;
-        NotifyIcon notifyIcon1 = new NotifyIcon();
+        NotifyIcon notifyIcon1;
+        public static int ssnamelength = 4; 
         public MainWindow()
         {
             InitializeComponent();
             this.WindowStyle = WindowStyle.None;
-            var titlecheck = new DispatcherTimer();
-            titlecheck.Interval = new TimeSpan(0,0,0,0,100);
+            var titlecheck = new DispatcherTimer
+            {
+                Interval = new TimeSpan(0, 0, 0, 0, 100)
+            };
             titlecheck.Tick += Titlecheck_Tick;
             titlecheck.IsEnabled = true;
 
             var _hotKey = new Hotkey(Key.D4, KeyModifier.Shift | KeyModifier.Ctrl, hkhandler);
             var _hotKey2 = new Hotkey(Key.D6, KeyModifier.Shift | KeyModifier.Ctrl, hkhandler);
-            
-            notifyIcon1.Icon = new Icon(System.IO.Path.GetFileName(@"image.ico"));
-            notifyIcon1.Text = "OwnShot";
-            notifyIcon1.Visible = true;
-            notifyIcon1.BalloonTipText = "If you see this, then I forgot to implement a code, sorry.";
-            notifyIcon1.BalloonTipTitle = "Screenshot get!";
+            notifyIcon1 = new NotifyIcon
+            {
+                Icon = new Icon(System.IO.Path.GetFileName(@"image.ico")),
+                Text = "OwnShot",
+                Visible = true,
+                BalloonTipText = "If you see this, then I forgot to implement a code, sorry.",
+                BalloonTipTitle = "Screenshot get!"
+            };
             notifyIcon1.BalloonTipClicked += NotifyIcon1_BalloonTipClicked;
         }
 
@@ -87,14 +92,14 @@ namespace ownshot
                 Width = System.Windows.Forms.Cursor.Current.Size.Width
             };
             var chars = "abcdefghijklmnopqrstuvwxyz0123456789"; //ABCDEFGHIJKLMNOPQRSTUVWXYZ
-            var stringChars = new char[3];
+            var stringChars = new char[MainWindow.ssnamelength];
             var random = new Random();
             for (int i = 0; i < stringChars.Length; i++)
             {
                 stringChars[i] = chars[random.Next(chars.Length)];
             }
-            var finalString = new String(stringChars);
-            ScreenPath = Directory.GetCurrentDirectory() + "\\" + new string(stringChars) + ".png";
+            var finalString = new string(stringChars);
+            ScreenPath = finalString + ".png";
             this.WindowState = WindowState.Minimized;
             System.Threading.Thread.Sleep(250);
 
@@ -108,10 +113,10 @@ namespace ownshot
             ScreenShot.CaptureImage(showCursor, curSize, curPos, System.Drawing.Point.Empty, System.Drawing.Point.Empty, bounds, ScreenPath, fi);
             try
             {
-                var request = (FtpWebRequest)WebRequest.Create("ftp://ardao.me/%2F/var/www/ardaome/public_html/files/" + new string(stringChars) + ".png");
+                var request = (FtpWebRequest)WebRequest.Create(File.ReadAllText("ftpdir.txt").Replace("imagename", finalString));
                 request.Method = WebRequestMethods.Ftp.UploadFile;
 
-                request.Credentials = new NetworkCredential("ardaoftp", File.ReadAllText("C:\\ftppass.txt"));
+                request.Credentials = new NetworkCredential(File.ReadAllText("ftpuser.txt"), File.ReadAllText("ftppass.txt"));
 
                 var fileContents = File.ReadAllBytes(ScreenPath);
                 request.ContentLength = fileContents.Length;
@@ -120,7 +125,7 @@ namespace ownshot
                 requestStream.Write(fileContents, 0, fileContents.Length);
                 requestStream.Close();
 
-                var link = "http://ardao.me/files/" + new string(stringChars) + ".png";
+                var link = File.ReadAllText("serverlink.txt").Replace("imagename", finalString);
 
                 var response = (FtpWebResponse)request.GetResponse();
                 notifyIcon1.BalloonTipText = link;
