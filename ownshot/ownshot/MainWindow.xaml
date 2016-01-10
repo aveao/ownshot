@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ownshot"
         WindowStyle="None"
         ShowInTaskbar="False"
+        Visibility="Hidden"
         AllowsTransparency="True"
         Background="Transparent"
         mc:Ignorable="d"
