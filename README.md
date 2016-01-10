@@ -26,7 +26,7 @@ On the `MainWindow.xaml.cs` file, there is a line like this:
 
 `public static int ssnamelength = 4;`
 
-Eeplace 4 with the length you want it to be.
+Replace 4 with the length you want it to be.
 
 ###How can I use this? 
 
