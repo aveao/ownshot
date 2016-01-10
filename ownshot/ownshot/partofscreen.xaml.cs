@@ -43,7 +43,7 @@ namespace ownshot
             BackPanel.Width = this.Width;
             BackPanel.Height = this.Height;
             screenCapture(false);
-            image.Source = new BitmapImage(new Uri(ScreenPath));
+            image.Source = new BitmapImage(new Uri(System.IO.Path.Combine(Environment.CurrentDirectory, ScreenPath)));
 
             selectionRectangle.MouseUp += image1_MouseLeftButtonUp;
             selectionRectangle.MouseDown += image1_MouseLeftButtonDown;
