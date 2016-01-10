@@ -1,15 +1,32 @@
 # ownshot
 Wanna setup your own LightShot, puush or gyazo? Here you go!
 
-###How can I setup this?
+###How can I use this?
 First of all, create a FTP user in your server.
-Then in [this](https://github.com/ardaozkal/ownshot/blob/master/ownshot/ownshot/MainWindow.xaml.cs) and [this](https://github.com/ardaozkal/ownshot/blob/master/ownshot/ownshot/partofscreen.xaml.cs) files:
 
-On the "var request = (FtpWebRequest)WebRequest.Create("ftp://ardao.me/%2F/var/www/ardaome/public_html/files/" + new string(stringChars) + ".png");" line, change the link to your server. %2F changes directory to /, change the rest of the link to where you want it to go (my publichtml folder is at /var/www/ardaome/publichtml, and I put the screenshots to the files folder in it.)
+Compile the code.
 
-On the "request.Credentials = new NetworkCredential("ardaoftp", File.ReadAllText("C:\\ftppass.txt"));" line, change ardaoftp with your FTP username and create a file in C, with the name "ftppass.txt", and put your password in it.
+On the running directory, create four files called `serverlink.txt, ftpuser.txt, ftppass.txt and ftpdir.txt`.
 
-On the "var link = "http://ardao.me/files/" + new string(stringChars) + ".png";" line, change the http://ardao.me/files/ part to your own server's link and folder.
+On `serverlink.txt` file, write the link it'll copy to copyboard. Replace image name with `imagename`. Ex. `http://ardao.me/files/imagename.png`
+
+On `ftpuser.txt` file, write the FTP username. Ex. `screenshotftpuser`.
+
+On `ftppass.txt` file, write the FTP password. Ex. `correcthorsebatterystaple`.
+
+On `ftpdir.txt` file, write the FTP link and directory. `%2F` returns you to / directory. Replace image name with `imagename`. Ex. `ftp://ardao.me/%2F/var/www/ardaome/public_html/files/imagename.png`
+
+Run the `ownshot.exe` file.
+
+If you want to run it at startup, open the startup folder (Run (`Win+R`): `shell:startup`) and copy a **shortcut** of the `ownshot.exe` file to the startup directory. Be sure to use a shortcut as ownshot keeps a copy of your screenshots at the running directory, if you fail to do it, you might be welcomed by hundreds of pictures at your next restart.
+
+###How can I change the length of the screenshot name?
+
+On the `MainWindow.xaml.cs` file, there is a line like this:
+
+`public static int ssnamelength = 4;`
+
+Eeplace 4 with the length you want it to be.
 
 ###How can I use this? 
 
