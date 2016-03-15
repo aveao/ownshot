@@ -1,0 +1,14 @@
+﻿<Properties StartupItem="OSHCrop/OSHCrop.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="OSHCrop/MainWindow.cs">
+    <Files>
+      <File FileName="ownshotLin/Program.cs" Line="10" Column="3" />
+      <File FileName="OSHCrop/Program.cs" Line="11" Column="38" />
+      <File FileName="OSHCrop/MainWindow.cs" Line="25" Column="5" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ownshotLin", "ownshotLin\ownshotLin.csproj", "{00908719-CD50-41F7-9E90-BF3B2BD9D102}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSHCrop", "OSHCrop\OSHCrop.csproj", "{8AFF60CE-DD47-476C-B089-9F910EA363AF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00908719-CD50-41F7-9E90-BF3B2BD9D102}.Debug|x86.ActiveCfg = Debug|x86
+		{00908719-CD50-41F7-9E90-BF3B2BD9D102}.Debug|x86.Build.0 = Debug|x86
+		{00908719-CD50-41F7-9E90-BF3B2BD9D102}.Release|x86.ActiveCfg = Release|x86
+		{00908719-CD50-41F7-9E90-BF3B2BD9D102}.Release|x86.Build.0 = Release|x86
+		{8AFF60CE-DD47-476C-B089-9F910EA363AF}.Debug|x86.ActiveCfg = Debug|x86
+		{8AFF60CE-DD47-476C-B089-9F910EA363AF}.Debug|x86.Build.0 = Debug|x86
+		{8AFF60CE-DD47-476C-B089-9F910EA363AF}.Release|x86.ActiveCfg = Release|x86
+		{8AFF60CE-DD47-476C-B089-9F910EA363AF}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+EndGlobal
