@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using Gtk;
+using Gdk;
 using System.Drawing;
 using System.IO;
 using System.Net;
@@ -15,12 +16,17 @@ namespace OSHCrop
 		static double upy = 0;
 		static int ssnamelength = 4;
 		static string finalString = "";
+		static Gtk.Image img;
+		static string configpath;
 
 		public static void Main(string[] args)
 		{
+			configpath = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/";
 			Application.Init();
 			win = new MainWindow();
 			var eventbox = new EventBox();
+
+			//win.ExposeEvent += OnExposed;
 
 			var chars = "abcdefghijklmnopqrstuvwxyz0123456789"; //ABCDEFGHIJKLMNOPQRSTUVWXYZ
 			var stringChars = new char[ssnamelength];
@@ -31,28 +37,27 @@ namespace OSHCrop
 			}
 			finalString = new string(stringChars) + ".png";
 
-
 			win.Hide();
-			TakeScreenshot(finalString.Replace(".png", "_pre.png"));
+			TakeScreenshot(configpath + finalString.Replace(".png", "_pre.png"));
 			win.Show();
 			win.Decorated = false;
 
-			var img = new Gtk.Image(finalString.Replace(".png", "_pre.png"));
-			//var thebutton = new Button();
+			img = new Gtk.Image(configpath + finalString.Replace(".png", "_pre.png"));
 			eventbox.ButtonPressEvent += (ButtonPressHandler);
 			eventbox.ButtonReleaseEvent += (ButtonReleaseHandler);
-			//thebutton.Image = img;
-			//thebutton.Relief = ReliefStyle.None;
-			//thebutton.Activate();
+
+			img.Xalign = 0.5f;
+			img.Yalign = 0.5f;
 
 			eventbox.Add(img);
 			eventbox.ShowAll();
 			win.Add(eventbox);
 			win.ShowAll();
 
+			win.Move(0, 0);
+
 			Application.Run();
 		}
-
 
 		public static void ButtonPressHandler (object o, ButtonPressEventArgs args)
 		{
@@ -65,18 +70,17 @@ namespace OSHCrop
 		{
 			upx = args.Event.X; 
 			upy = args.Event.Y; 
-			completecrop(finalString); 
+			completecrop(configpath + finalString); 
 			args.RetVal = true;
 		}
 
 		static void completecrop(string finalString)
 		{
-			var configpath = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "/";
 			int startx = Convert.ToInt32((upx < downx) ? upx : downx);
 			int starty = Convert.ToInt32((upy < downy) ? upy : downy);
 			int sizex = Convert.ToInt32((upx > downx) ? (upx - downx) : (downx - upx));
 			int sizey = Convert.ToInt32((upy > downy) ? (upy - downy) : (downy - upy));
-			cropAtRect(System.Drawing.Image.FromFile(finalString.Replace(".png", "_pre.png")), new Rectangle(new Point(startx, starty), new Size(sizex, sizey))).Save(configpath + finalString);
+			cropAtRect(System.Drawing.Image.FromFile(finalString.Replace(".png", "_pre.png")), new System.Drawing.Rectangle(new System.Drawing.Point(startx, starty), new System.Drawing.Size(sizex, sizey))).Save(configpath + finalString);
 
 			win.HideAll();
 
@@ -104,6 +108,10 @@ namespace OSHCrop
 				proc.StartInfo.RedirectStandardOutput = false;
 				proc.Start();
 
+				Gtk.Clipboard clipboard = Gtk.Clipboard.Get(Gdk.Atom.Intern("CLIPBOARD", false));
+
+				clipboard.Text = link;
+
 				requestStream.Dispose();
 				response.Close();
 
@@ -121,7 +129,7 @@ namespace OSHCrop
 			Application.Quit();
 		}
 
-		public static System.Drawing.Image cropAtRect(System.Drawing.Image b, Rectangle r)
+		public static System.Drawing.Image cropAtRect(System.Drawing.Image b, System.Drawing.Rectangle r)
 		{
 			var nb = new Bitmap(r.Width, r.Height);
 			var g = Graphics.FromImage(nb);
