@@ -58,6 +58,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Hotkey.cs" />
+    <Compile Include="OwnShotHelpers.cs" />
     <Compile Include="partofscreen.xaml.cs">
       <DependentUpon>partofscreen.xaml</DependentUpon>
     </Compile>
