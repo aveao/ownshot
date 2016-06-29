@@ -90,16 +90,13 @@ namespace ownshot
                 rcFrom.Width = (int)((rect1.Width) * (image.Source.Width) / (image.Width));
                 rcFrom.Height = (int)((rect1.Height) * (image.Source.Height) / (image.Height));
                 BitmapSource bs = new CroppedBitmap(image.Source as BitmapSource, rcFrom);
-
-                System.Drawing.Bitmap bitmap;
+                
                 using (MemoryStream outStream = new MemoryStream())
                 {
                     BitmapEncoder enc = new BmpBitmapEncoder();
                     enc.Frames.Add(BitmapFrame.Create(bs));
                     enc.Save(outStream);
-                    bitmap = new System.Drawing.Bitmap(outStream);
-                    ScreenPath = ScreenPath.Replace("_pre", "");
-                    bitmap.Save(ScreenPath, ImageFormat.Png);
+                    new System.Drawing.Bitmap(outStream).Save(ScreenPath.Replace("_pre", ""), ImageFormat.Png);
                 }
 
                 referring.ShowBalloon(OwnShotHelpers.UploadImage(ScreenPath));
@@ -114,11 +111,9 @@ namespace ownshot
 
         public void screenCapture(bool showCursor)
         {
-            var finalString = OwnShotHelpers.RandomName(MainWindow.ssnamelength) + "_pre";
+            curname = OwnShotHelpers.RandomName(MainWindow.ssnamelength) + "_pre";
 
-            ScreenPath = finalString + ".png";
-            curname = finalString;
-            var stlye = this.WindowStyle;
+            ScreenPath = curname + ".png";
             
             this.WindowState = WindowState.Minimized;
             System.Threading.Thread.Sleep(250);
