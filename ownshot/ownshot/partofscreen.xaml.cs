@@ -96,7 +96,8 @@ namespace ownshot
                     BitmapEncoder enc = new BmpBitmapEncoder();
                     enc.Frames.Add(BitmapFrame.Create(bs));
                     enc.Save(outStream);
-                    new System.Drawing.Bitmap(outStream).Save(ScreenPath.Replace("_pre", ""), ImageFormat.Png);
+                    ScreenPath = ScreenPath.Replace("_pre", "");
+                    new System.Drawing.Bitmap(outStream).Save(ScreenPath, ImageFormat.Png);
                 }
 
                 referring.ShowBalloon(OwnShotHelpers.UploadImage(ScreenPath));
