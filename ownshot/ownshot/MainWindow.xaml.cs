@@ -32,7 +32,7 @@ namespace ownshot
         public MainWindow()
         {
             InitializeComponent();
-
+            SetWindowStyle(false);
             new Hotkey(Key.D4, KeyModifier.Shift | KeyModifier.Ctrl, hkhandler);
             new Hotkey(Key.D6, KeyModifier.Shift | KeyModifier.Ctrl, hkhandler);
             notifyIcon1 = new NotifyIcon
@@ -44,6 +44,16 @@ namespace ownshot
                 BalloonTipTitle = "Screenshot get!"
             };
             notifyIcon1.BalloonTipClicked += NotifyIcon1_BalloonTipClicked;
+        }
+
+        void SetWindowStyle(bool hidden)
+        {
+            this.ResizeMode = ResizeMode.NoResize;
+            this.WindowStyle = WindowStyle.None;
+            this.ShowInTaskbar = !hidden;
+            this.Visibility = (hidden) ? Visibility.Hidden : Visibility.Visible;
+            this.AllowsTransparency = hidden;
+            this.Background = (hidden) ? System.Windows.Media.Brushes.Transparent : System.Windows.Media.Brushes.LightGray;
         }
 
         public void ShowBalloon(string text)
