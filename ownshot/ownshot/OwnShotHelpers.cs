@@ -56,9 +56,10 @@ namespace ownshot
 
         public static bool saveToClipboard = false;
 
-        public static void CaptureImage(bool showCursor, Size curSize, Point curPos, string FilePath)
+        public static void CaptureImage(bool showCursor, string FilePath)
         {
-            var SelectionRectangle = Screen.GetBounds(Screen.GetBounds(Point.Empty));
+            var SelectionRectangle = Screen.GetBounds(Point.Empty);
+
             using (Bitmap bitmap = new Bitmap(SelectionRectangle.Width, SelectionRectangle.Height))
             {
                 using (Graphics g = Graphics.FromImage(bitmap))
@@ -66,7 +67,7 @@ namespace ownshot
                     g.CopyFromScreen(Point.Empty, Point.Empty, SelectionRectangle.Size);
                     if (showCursor)
                     {
-                        var cursorBounds = new Rectangle(curPos, curSize);
+                        var cursorBounds = new Rectangle(Cursor.Position, Cursor.Current.Size);
                         Cursors.Default.Draw(g, cursorBounds);
                     }
                 }

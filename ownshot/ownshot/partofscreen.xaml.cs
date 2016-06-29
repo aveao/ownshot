@@ -34,13 +34,6 @@ namespace ownshot
             BackPanel.Width = image.Width = this.Width = SystemParameters.PrimaryScreenWidth;
             BackPanel.Height = image.Height = this.Height = SystemParameters.PrimaryScreenHeight;
 
-            //this.Width = SystemParameters.PrimaryScreenWidth;
-            //this.Height = SystemParameters.PrimaryScreenHeight;
-            //image.Width = this.Width;
-            //image.Height = this.Height;
-            //BackPanel.Width = this.Width;
-            //BackPanel.Height = this.Height;
-
             selectionRectangle.MouseDown += image1_MouseLeftButtonDown;
             BackPanel.MouseDown += image1_MouseLeftButtonDown;
             image.MouseDown += image1_MouseLeftButtonDown;
@@ -72,8 +65,7 @@ namespace ownshot
             selectionRectangle.Width = Math.Abs(x - anchorPoint.X);
             selectionRectangle.Height = Math.Abs(y - anchorPoint.Y);
 
-            if (selectionRectangle.Visibility != Visibility.Visible)
-                selectionRectangle.Visibility = Visibility.Visible;
+            selectionRectangle.Visibility = Visibility.Visible;
         }
 
         private void image1_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -122,24 +114,17 @@ namespace ownshot
 
         public void screenCapture(bool showCursor)
         {
-            var curPos = new System.Drawing.Point(System.Windows.Forms.Cursor.Position.X, System.Windows.Forms.Cursor.Position.Y);
-            var curSize = new System.Drawing.Size
-            {
-                Height = System.Windows.Forms.Cursor.Current.Size.Height,
-                Width = System.Windows.Forms.Cursor.Current.Size.Width
-            };
-
             var finalString = OwnShotHelpers.RandomName(MainWindow.ssnamelength) + "_pre";
 
             ScreenPath = finalString + ".png";
             curname = finalString;
-
+            var stlye = this.WindowStyle;
+            
             this.WindowState = WindowState.Minimized;
-
             System.Threading.Thread.Sleep(250);
             
-            OwnShotHelpers.CaptureImage(showCursor, curSize, curPos, ScreenPath);
-
+            OwnShotHelpers.CaptureImage(showCursor, ScreenPath);
+            
             this.WindowState = WindowState.Normal;
         }
 

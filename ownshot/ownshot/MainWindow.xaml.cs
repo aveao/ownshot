@@ -32,10 +32,9 @@ namespace ownshot
         public MainWindow()
         {
             InitializeComponent();
-            this.WindowStyle = WindowStyle.None;
 
-            var _hotKey = new Hotkey(Key.D4, KeyModifier.Shift | KeyModifier.Ctrl, hkhandler);
-            var _hotKey2 = new Hotkey(Key.D6, KeyModifier.Shift | KeyModifier.Ctrl, hkhandler);
+            new Hotkey(Key.D4, KeyModifier.Shift | KeyModifier.Ctrl, hkhandler);
+            new Hotkey(Key.D6, KeyModifier.Shift | KeyModifier.Ctrl, hkhandler);
             notifyIcon1 = new NotifyIcon
             {
                 Icon = new Icon(System.IO.Path.GetFileName(@"image.ico")),
@@ -75,18 +74,11 @@ namespace ownshot
 
         public void screenCapture(bool showCursor)
         {
-            var curPos = new System.Drawing.Point(System.Windows.Forms.Cursor.Position.X, System.Windows.Forms.Cursor.Position.Y);
-            var curSize = new System.Drawing.Size
-            {
-                Height = System.Windows.Forms.Cursor.Current.Size.Height,
-                Width = System.Windows.Forms.Cursor.Current.Size.Width
-            };
-
             var ScreenPath = OwnShotHelpers.RandomName(ssnamelength) + ".png";
             this.WindowState = WindowState.Minimized;
             System.Threading.Thread.Sleep(250);
 
-            OwnShotHelpers.CaptureImage(showCursor, curSize, curPos, ScreenPath);
+            OwnShotHelpers.CaptureImage(showCursor, ScreenPath);
 
             ShowBalloon(OwnShotHelpers.UploadImage(ScreenPath));
             

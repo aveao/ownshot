@@ -62,7 +62,6 @@
     <Compile Include="partofscreen.xaml.cs">
       <DependentUpon>partofscreen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ScreenShot.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
