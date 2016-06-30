@@ -12,6 +12,10 @@
         AllowsTransparency="True"
         Background="Transparent" -->
     <Grid>
-        
+        <Image x:Name="image" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Width="300"/>
+        <Canvas x:Name="BackPanel">
+            <Rectangle x:Name="selectionRectangle" Stroke="LightBlue" Fill="#220000FF" Visibility="Collapsed" />
+            <Button x:Name="button" Content="Exit" Canvas.Left="10" Canvas.Top="10" Width="28" Click="button_Click"/>
+        </Canvas>
     </Grid>
 </Window>

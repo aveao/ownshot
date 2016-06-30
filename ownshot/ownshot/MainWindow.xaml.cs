@@ -32,7 +32,8 @@ namespace ownshot
         public MainWindow()
         {
             InitializeComponent();
-            SetWindowStyle(false);
+            this.AllowsTransparency = true;
+            SetWindowStyle(true);
             new Hotkey(Key.D4, KeyModifier.Shift | KeyModifier.Ctrl, hkhandler);
             new Hotkey(Key.D6, KeyModifier.Shift | KeyModifier.Ctrl, hkhandler);
             notifyIcon1 = new NotifyIcon
@@ -48,11 +49,11 @@ namespace ownshot
 
         void SetWindowStyle(bool hidden)
         {
+            this.Topmost = !hidden;
             this.ResizeMode = ResizeMode.NoResize;
             this.WindowStyle = WindowStyle.None;
             this.ShowInTaskbar = !hidden;
             this.Visibility = (hidden) ? Visibility.Hidden : Visibility.Visible;
-            this.AllowsTransparency = hidden;
             this.Background = (hidden) ? System.Windows.Media.Brushes.Transparent : System.Windows.Media.Brushes.LightGray;
         }
 
@@ -76,23 +77,118 @@ namespace ownshot
             }
             else if (hotKey.Key == Key.D6)
             {
-                var pos = new partofscreen(this);
-                pos.Show();
-                pos.Activate();
+                PartOfScreen();
             }
         }
 
-        public void screenCapture(bool showCursor)
+        public void screenCapture(bool showCursor, bool Partial = false)
         {
-            var ScreenPath = OwnShotHelpers.RandomName(ssnamelength) + ".png";
-            this.WindowState = WindowState.Minimized;
-            System.Threading.Thread.Sleep(250);
+            curname = OwnShotHelpers.RandomName(ssnamelength) + (Partial ? "_pre" : "");
+            ScreenPath = curname + ".png";
+
+            SetWindowStyle(true);
+            System.Threading.Thread.Sleep(25);
 
             OwnShotHelpers.CaptureImage(showCursor, ScreenPath);
 
-            ShowBalloon(OwnShotHelpers.UploadImage(ScreenPath));
+            if (!Partial) ShowBalloon(OwnShotHelpers.UploadImage(ScreenPath));
             
-            this.WindowState = WindowState.Normal;
+            SetWindowStyle(!Partial);
         }
+
+        void PartOfScreen()
+        {
+            screenCapture(false, true);
+            image.Source = new BitmapImage(new Uri(System.IO.Path.Combine(Environment.CurrentDirectory, ScreenPath)));
+
+            //+ugh fml
+            SetWindowStyle(false);
+            this.Left = 0;
+            this.Top = 0;
+
+            BackPanel.Width = image.Width = this.Width = SystemParameters.PrimaryScreenWidth;
+            BackPanel.Height = image.Height = this.Height = SystemParameters.PrimaryScreenHeight;
+
+            selectionRectangle.MouseDown += image1_MouseLeftButtonDown;
+            BackPanel.MouseDown += image1_MouseLeftButtonDown;
+            image.MouseDown += image1_MouseLeftButtonDown;
+            //-ugh fml
+        }
+
+        #region "Mouse events"
+        private System.Windows.Point anchorPoint;
+
+        private void image1_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            anchorPoint.X = e.GetPosition(BackPanel).X;
+            anchorPoint.Y = e.GetPosition(BackPanel).Y;
+
+            image.MouseUp += image1_MouseLeftButtonUp;
+            BackPanel.MouseUp += image1_MouseLeftButtonUp;
+            selectionRectangle.MouseUp += image1_MouseLeftButtonUp;
+            image.MouseMove += image1_MouseMove;
+            BackPanel.MouseMove += image1_MouseMove;
+            selectionRectangle.MouseMove += image1_MouseMove;
+            BackPanel.MouseDown -= image1_MouseLeftButtonDown;
+            image.MouseDown -= image1_MouseLeftButtonDown;
+            selectionRectangle.MouseDown -= image1_MouseLeftButtonDown;
+        }
+
+        private void image1_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            double x = e.GetPosition(BackPanel).X;
+            double y = e.GetPosition(BackPanel).Y;
+            selectionRectangle.SetValue(Canvas.LeftProperty, Math.Min(x, anchorPoint.X));
+            selectionRectangle.SetValue(Canvas.TopProperty, Math.Min(y, anchorPoint.Y));
+            selectionRectangle.Width = Math.Abs(x - anchorPoint.X);
+            selectionRectangle.Height = Math.Abs(y - anchorPoint.Y);
+
+            selectionRectangle.Visibility = Visibility.Visible;
+        }
+
+        private void image1_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            selectionRectangle.MouseUp -= image1_MouseLeftButtonUp;
+            selectionRectangle.MouseMove -= image1_MouseMove;
+            BackPanel.MouseUp -= image1_MouseLeftButtonUp;
+            BackPanel.MouseMove -= image1_MouseMove;
+            image.MouseUp -= image1_MouseLeftButtonUp;
+            image.MouseMove -= image1_MouseMove;
+
+            if (selectionRectangle.Width > 0)
+            {
+                this.Hide();
+                Rect rect1 = new Rect(Canvas.GetLeft(selectionRectangle), Canvas.GetTop(selectionRectangle), selectionRectangle.Width, selectionRectangle.Height);
+                Int32Rect rcFrom = new Int32Rect();
+                rcFrom.X = (int)((rect1.X) * (image.Source.Width) / (image.Width));
+                rcFrom.Y = (int)((rect1.Y) * (image.Source.Height) / (image.Height));
+                rcFrom.Width = (int)((rect1.Width) * (image.Source.Width) / (image.Width));
+                rcFrom.Height = (int)((rect1.Height) * (image.Source.Height) / (image.Height));
+                BitmapSource bs = new CroppedBitmap(image.Source as BitmapSource, rcFrom);
+
+                using (MemoryStream outStream = new MemoryStream())
+                {
+                    BitmapEncoder enc = new BmpBitmapEncoder();
+                    enc.Frames.Add(BitmapFrame.Create(bs));
+                    enc.Save(outStream);
+                    ScreenPath = ScreenPath.Replace("_pre", "");
+                    new Bitmap(outStream).Save(ScreenPath, System.Drawing.Imaging.ImageFormat.Png);
+                }
+
+                ShowBalloon(OwnShotHelpers.UploadImage(ScreenPath));
+                SetWindowStyle(true);
+                selectionRectangle.Width = 0; //workaround
+            }
+            selectionRectangle.Visibility = Visibility.Visible;
+        }
+
+
+        #endregion
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        string ScreenPath;
+        string curname = "";
     }
 }
