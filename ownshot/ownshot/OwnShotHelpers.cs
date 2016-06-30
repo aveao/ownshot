@@ -69,15 +69,15 @@ namespace ownshot
                 var requestStream = request.GetRequestStream();
                 requestStream.Write(fileContents, 0, fileContents.Length);
                 requestStream.Close();
+                requestStream.Dispose();
+
+                var response = (FtpWebResponse)request.GetResponse();
+                response.Close();
 
                 var link = File.ReadAllText("serverlink.txt").Replace(".png", "").Replace("imagename", ImagePath);
 
-                var response = (FtpWebResponse)request.GetResponse();
                 System.Windows.Clipboard.SetDataObject(link);
-
-                requestStream.Dispose();
-                response.Close();
-
+                
                 return link;
             }
             catch (Exception ex)
@@ -86,8 +86,6 @@ namespace ownshot
                 return "ERROR: " + ex.ToString();
             }
         }
-
-        public static bool saveToClipboard = false;
 
         public static void CaptureImage(bool showCursor, string FilePath)
         {

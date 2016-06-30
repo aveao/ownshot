@@ -27,7 +27,7 @@ namespace ownshot
             new Hotkey(Key.D6, KeyModifier.Shift | KeyModifier.Ctrl, hkhandler);
             notifyIcon1 = new NotifyIcon
             {
-                Icon = new Icon(System.IO.Path.GetFileName(@"image.ico")),
+                Icon = new Icon(Path.GetFileName(@"image.ico")),
                 Text = "OwnShot",
                 Visible = true,
                 BalloonTipText = "If you see this text, then I forgot to implement some code, sorry.",
@@ -103,7 +103,7 @@ namespace ownshot
         void PartOfScreen()
         {
             screenCapture(false, true);
-            image.Source = new BitmapImage(new Uri(System.IO.Path.Combine(Environment.CurrentDirectory, ScreenPath)));
+            image.Source = new BitmapImage(new Uri(Path.Combine(Environment.CurrentDirectory, ScreenPath)));
 
             //+ugh fml
             SetWindowStyle(false);
