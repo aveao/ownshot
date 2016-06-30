@@ -25,7 +25,7 @@ namespace ownshot
         {
             try
             {
-                var request = (FtpWebRequest)WebRequest.Create(File.ReadAllText("ftpdir.txt").Replace("imagename", ImagePath));
+                var request = (FtpWebRequest)WebRequest.Create(File.ReadAllText("ftpdir.txt").Replace("imagename", ImagePath).Replace(".png", ""));
                 request.Method = WebRequestMethods.Ftp.UploadFile;
 
                 request.Credentials = new NetworkCredential(File.ReadAllText("ftpuser.txt"), File.ReadAllText("ftppass.txt"));
@@ -37,7 +37,7 @@ namespace ownshot
                 requestStream.Write(fileContents, 0, fileContents.Length);
                 requestStream.Close();
 
-                var link = File.ReadAllText("serverlink.txt").Replace("imagename", ImagePath);
+                var link = File.ReadAllText("serverlink.txt").Replace("imagename", ImagePath).Replace(".png", "");
 
                 var response = (FtpWebResponse)request.GetResponse();
                 System.Windows.Clipboard.SetDataObject(link);
