@@ -1,24 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
-using System.Net;
-using System.Windows.Threading;
 
 namespace ownshot
 {
@@ -28,7 +15,8 @@ namespace ownshot
     public partial class MainWindow : Window
     {
         NotifyIcon notifyIcon1;
-        public static int ssnamelength = 4; 
+        public static int ssnamelength = 4;
+        string ScreenPath;
         public MainWindow()
         {
             InitializeComponent();
@@ -88,8 +76,7 @@ namespace ownshot
 
         public void WindowCapture()
         {
-            curname = OwnShotHelpers.RandomName(ssnamelength);
-            ScreenPath = curname + ".png";
+            ScreenPath = OwnShotHelpers.RandomName(ssnamelength) + ".png";
 
             SetWindowStyle(true);
             System.Threading.Thread.Sleep(25);
@@ -101,8 +88,7 @@ namespace ownshot
 
         public void screenCapture(bool showCursor, bool Partial = false)
         {
-            curname = OwnShotHelpers.RandomName(ssnamelength) + (Partial ? "_pre" : "");
-            ScreenPath = curname + ".png";
+            ScreenPath = OwnShotHelpers.RandomName(ssnamelength) + (Partial ? "_pre" : "") + ".png";
 
             SetWindowStyle(true);
             System.Threading.Thread.Sleep(25);
@@ -206,7 +192,5 @@ namespace ownshot
         {
             this.Close();
         }
-        string ScreenPath;
-        string curname = "";
     }
 }
