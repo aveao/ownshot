@@ -19,12 +19,10 @@ C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\bin\Debug\ownshot.exe
 C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\bin\Debug\ownshot.pdb
 C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\ownshot.csprojResolveAssemblyReference.cache
 C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\MainWindow.g.cs
-C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\partofscreen.g.cs
 C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\App.g.cs
 C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\ownshot_MarkupCompile.cache
 C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\ownshot_MarkupCompile.lref
 C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\MainWindow.baml
-C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\partofscreen.baml
 C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\ownshot.g.resources
 C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\ownshot.Properties.Resources.resources
 C:\Users\ardao\Documents\GitHub\ownshot\ownshot\ownshot\obj\Debug\ownshot.csproj.GenerateResource.Cache

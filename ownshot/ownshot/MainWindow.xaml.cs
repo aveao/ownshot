@@ -35,6 +35,7 @@ namespace ownshot
             this.AllowsTransparency = true;
             SetWindowStyle(true);
             new Hotkey(Key.D4, KeyModifier.Shift | KeyModifier.Ctrl, hkhandler);
+            new Hotkey(Key.D5, KeyModifier.Shift | KeyModifier.Ctrl, hkhandler);
             new Hotkey(Key.D6, KeyModifier.Shift | KeyModifier.Ctrl, hkhandler);
             notifyIcon1 = new NotifyIcon
             {
@@ -75,10 +76,27 @@ namespace ownshot
             {
                 screenCapture(true);
             }
+            else if (hotKey.Key == Key.D5)
+            {
+                WindowCapture();
+            }
             else if (hotKey.Key == Key.D6)
             {
                 PartOfScreen();
             }
+        }
+
+        public void WindowCapture()
+        {
+            curname = OwnShotHelpers.RandomName(ssnamelength);
+            ScreenPath = curname + ".png";
+
+            SetWindowStyle(true);
+            System.Threading.Thread.Sleep(25);
+
+            OwnShotHelpers.WindowCapture(ScreenPath);
+
+            ShowBalloon(OwnShotHelpers.UploadImage(ScreenPath));
         }
 
         public void screenCapture(bool showCursor, bool Partial = false)
