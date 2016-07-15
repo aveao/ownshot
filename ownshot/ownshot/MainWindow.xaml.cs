@@ -191,6 +191,13 @@ namespace ownshot
         private void button_Click(object sender, RoutedEventArgs e)
         {
             SetWindowStyle(true);
+            selectionRectangle.MouseUp -= image1_MouseLeftButtonUp;
+            selectionRectangle.MouseMove -= image1_MouseMove;
+            BackPanel.MouseUp -= image1_MouseLeftButtonUp;
+            BackPanel.MouseMove -= image1_MouseMove;
+            image.MouseUp -= image1_MouseLeftButtonUp;
+            image.MouseMove -= image1_MouseMove;
+            selectionRectangle.Width = 0; //workaround
         }
     }
 }
