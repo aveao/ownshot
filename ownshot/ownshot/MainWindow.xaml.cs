@@ -190,7 +190,7 @@ namespace ownshot
         #endregion
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            SetWindowStyle(true);
         }
     }
 }
