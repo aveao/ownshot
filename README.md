@@ -1,5 +1,7 @@
 # ownshot
-Wanna setup your own LightShot, puush or gyazo? Here you go!
+Simple screen capturing application for Windows and Linux. Captures image, uploads it to your server and gives you a link.
+
+Wanna setup your own LightShot, puush or gyazo? Here you go! 
 
 ###How can I use this?
 
