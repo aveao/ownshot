@@ -107,11 +107,17 @@ namespace ownshot
 
             //+ugh fml
             SetWindowStyle(false);
-            this.Left = 0;
-            this.Top = 0;
+            this.Left = SystemParameters.VirtualScreenLeft;
+            this.Top = SystemParameters.VirtualScreenTop;
 
-            BackPanel.Width = image.Width = this.Width = SystemParameters.PrimaryScreenWidth;
-            BackPanel.Height = image.Height = this.Height = SystemParameters.PrimaryScreenHeight;
+            var buttonPos = new System.Windows.Media.TranslateTransform();
+            buttonPos.X = (0 - SystemParameters.VirtualScreenLeft) + 15;
+            buttonPos.Y = (0 - SystemParameters.VirtualScreenTop) + 15;
+
+            button.RenderTransform = buttonPos;
+
+            BackPanel.Width = image.Width = this.Width = SystemParameters.VirtualScreenWidth;
+            BackPanel.Height = image.Height = this.Height = SystemParameters.VirtualScreenHeight;
 
             selectionRectangle.MouseDown += image1_MouseLeftButtonDown;
             BackPanel.MouseDown += image1_MouseLeftButtonDown;

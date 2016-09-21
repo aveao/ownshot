@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ownshot"
         WindowStyle="None"
         mc:Ignorable="d"
-        Title="OwnShot" Height="350" Width="276" ResizeMode="NoResize">
+        Title="OwnShot" Height="1" Width="1" ResizeMode="NoResize">
     <!--ShowInTaskbar="False"
         Visibility="Hidden"
         AllowsTransparency="True"

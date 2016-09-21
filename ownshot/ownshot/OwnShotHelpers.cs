@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Runtime.InteropServices;
@@ -89,20 +90,22 @@ namespace ownshot
 
         public static void CaptureImage(bool showCursor, string FilePath)
         {
-            var SelectionRectangle = Screen.GetBounds(Point.Empty);
-
-            using (Bitmap bitmap = new Bitmap(SelectionRectangle.Width, SelectionRectangle.Height))
+            int screenWidth = Convert.ToInt32(System.Windows.SystemParameters.VirtualScreenWidth);
+            int screenHeight = Convert.ToInt32(System.Windows.SystemParameters.VirtualScreenHeight);
+            int screenLeft = Convert.ToInt32(System.Windows.SystemParameters.VirtualScreenLeft);
+            int screenTop = Convert.ToInt32(System.Windows.SystemParameters.VirtualScreenTop);
+            using (Bitmap bitmap = new Bitmap(screenWidth, screenHeight, PixelFormat.Format32bppArgb))
             {
-                using (Graphics g = Graphics.FromImage(bitmap))
+                using (Graphics gr = Graphics.FromImage(bitmap))
                 {
-                    g.CopyFromScreen(Point.Empty, Point.Empty, SelectionRectangle.Size);
+                    gr.CopyFromScreen(screenLeft, screenTop, 0, 0, bitmap.Size);
                     if (showCursor)
                     {
                         var cursorBounds = new Rectangle(Cursor.Position, Cursor.Current.Size);
-                        Cursors.Default.Draw(g, cursorBounds);
+                        Cursors.Default.Draw(gr, cursorBounds);
                     }
+                    bitmap.Save(FilePath);
                 }
-                bitmap.Save(FilePath, System.Drawing.Imaging.ImageFormat.Png);
             }
         }
     }
