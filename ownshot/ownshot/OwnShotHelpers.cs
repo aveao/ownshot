@@ -39,7 +39,7 @@ namespace ownshot
             {
                 g.CopyFromScreen(new Point(bounds.Left, bounds.Top), Point.Empty, bounds.Size);
             }
-            result.Save(FilePath, System.Drawing.Imaging.ImageFormat.Png);
+            result.Save(FilePath, ImageFormat.Png);
         }
 
         public static string RandomName(int length)
@@ -55,36 +55,74 @@ namespace ownshot
             return new string(stringChars);
         }
 
+        public static string GetConfig(string text)
+        {
+            var config = File.ReadAllLines("ownshot.ini");
+            var SearchingFor = text + "=";
+            foreach (var line in config)
+            {
+                if (line.StartsWith(SearchingFor))
+                {
+                    return line.Replace(SearchingFor, "");
+                }
+            }
+            return "NOTFOUND";
+        }
+
         public static string UploadImage(string ImagePath)
         {
-            try
+            var UploadMethod = GetConfig("UploadMethod").Trim();
+            if (UploadMethod.ToUpper() == "FTP")
             {
-                var request = (FtpWebRequest)WebRequest.Create(File.ReadAllText("ftpdir.txt").Replace(".png", "").Replace("imagename", ImagePath));
-                request.Method = WebRequestMethods.Ftp.UploadFile;
+                try
+                {
+                    var request = (FtpWebRequest)WebRequest.Create(GetConfig("FTPDirectory").Replace(".png", "").Replace("imagename", ImagePath));
+                    request.Method = WebRequestMethods.Ftp.UploadFile;
 
-                request.Credentials = new NetworkCredential(File.ReadAllText("ftpuser.txt"), File.ReadAllText("ftppass.txt"));
+                    request.Credentials = new NetworkCredential(GetConfig("FTPUser"), GetConfig("FTPPassword"));
 
-                var fileContents = File.ReadAllBytes(ImagePath);
-                request.ContentLength = fileContents.Length;
+                    var fileContents = File.ReadAllBytes(ImagePath);
+                    request.ContentLength = fileContents.Length;
 
-                var requestStream = request.GetRequestStream();
-                requestStream.Write(fileContents, 0, fileContents.Length);
-                requestStream.Close();
-                requestStream.Dispose();
+                    var requestStream = request.GetRequestStream();
+                    requestStream.Write(fileContents, 0, fileContents.Length);
+                    requestStream.Close();
+                    requestStream.Dispose();
 
-                var response = (FtpWebResponse)request.GetResponse();
-                response.Close();
+                    var response = (FtpWebResponse)request.GetResponse();
+                    response.Close();
 
-                var link = File.ReadAllText("serverlink.txt").Replace(".png", "").Replace("imagename", ImagePath);
+                    var link = GetConfig("ServerLink").Replace(".png", "").Replace("imagename", ImagePath);
 
-                System.Windows.Clipboard.SetDataObject(link);
-                
-                return link;
+                    System.Windows.Clipboard.SetDataObject(link);
+
+                    return link;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    return "ERROR: " + ex.ToString();
+                }
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine(ex);
-                return "ERROR: " + ex.ToString();
+                var proc = new System.Diagnostics.Process
+                {
+                    StartInfo = new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = UploadMethod,
+                        Arguments = ImagePath,
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        CreateNoWindow = true
+                    }
+                };
+                proc.Start();
+                while (!proc.StandardOutput.EndOfStream)
+                {
+                    return proc.StandardOutput.ReadLine();
+                }
+                return "ERROR: the external thingy didn't work";
             }
         }
 

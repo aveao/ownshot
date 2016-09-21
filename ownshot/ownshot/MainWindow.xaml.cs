@@ -103,7 +103,12 @@ namespace ownshot
         void PartOfScreen()
         {
             screenCapture(false, true);
-            image.Source = new BitmapImage(new Uri(Path.Combine(Environment.CurrentDirectory, ScreenPath)));
+            BitmapImage imageContent = new BitmapImage();
+            imageContent.BeginInit();
+            imageContent.CacheOption = BitmapCacheOption.OnLoad;
+            imageContent.UriSource = new Uri(Path.Combine(Environment.CurrentDirectory, ScreenPath));
+            imageContent.EndInit();
+            image.Source = imageContent;
 
             //+ugh fml
             SetWindowStyle(false);
@@ -175,12 +180,13 @@ namespace ownshot
                 rcFrom.Width = (int)((rect1.Width) * (image.Source.Width) / (image.Width));
                 rcFrom.Height = (int)((rect1.Height) * (image.Source.Height) / (image.Height));
                 BitmapSource bs = new CroppedBitmap(image.Source as BitmapSource, rcFrom);
-
+                var PreScreenPath = "";
                 using (MemoryStream outStream = new MemoryStream())
                 {
                     BitmapEncoder enc = new BmpBitmapEncoder();
                     enc.Frames.Add(BitmapFrame.Create(bs));
                     enc.Save(outStream);
+                    PreScreenPath = ScreenPath;
                     ScreenPath = ScreenPath.Replace("_pre", "");
                     new Bitmap(outStream).Save(ScreenPath, System.Drawing.Imaging.ImageFormat.Png);
                 }
@@ -188,6 +194,14 @@ namespace ownshot
                 ShowBalloon(OwnShotHelpers.UploadImage(ScreenPath));
                 SetWindowStyle(true);
                 selectionRectangle.Width = 0; //workaround
+
+                switch (OwnShotHelpers.GetConfig("DeleteMode"))
+                {
+                    case "Yes":
+                        File.Delete(ScreenPath);
+                        File.Delete(PreScreenPath);
+                        break;
+                }
             }
             selectionRectangle.Visibility = Visibility.Visible;
         }
