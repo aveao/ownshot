@@ -35,7 +35,7 @@ namespace ownshot
             };
             notifyIcon1.BalloonTipClicked += NotifyIcon1_BalloonTipClicked;
         }
-
+        
         void SetWindowStyle(bool hidden)
         {
             this.Topmost = !hidden;

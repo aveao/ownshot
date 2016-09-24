@@ -120,9 +120,11 @@ namespace ownshot
                 proc.Start();
                 while (!proc.StandardOutput.EndOfStream)
                 {
-                    return proc.StandardOutput.ReadLine();
+                    var link = proc.StandardOutput.ReadLine();
+                    System.Windows.Clipboard.SetDataObject(link);
+                    return link;
                 }
-                return "ERROR: the external thingy didn't work";
+                return "ERROR: the external uploader timed out";
             }
         }
 
