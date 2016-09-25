@@ -106,11 +106,9 @@ namespace ownshot
             
             SetWindowStyle(!Partial);
 
-            switch (OwnShotHelpers.GetConfig("DeleteMode"))
+            if (!Partial && OwnShotHelpers.GetConfig("DeleteMode") == "Yes")
             {
-                case "Yes":
-                    File.Delete(ScreenPath);
-                    break;
+                File.Delete(ScreenPath);
             }
         }
 
