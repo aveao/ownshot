@@ -84,6 +84,13 @@ namespace ownshot
             OwnShotHelpers.WindowCapture(ScreenPath);
 
             ShowBalloon(OwnShotHelpers.UploadImage(ScreenPath));
+
+            switch (OwnShotHelpers.GetConfig("DeleteMode"))
+            {
+                case "Yes":
+                    File.Delete(ScreenPath);
+                    break;
+            }
         }
 
         public void screenCapture(bool showCursor, bool Partial = false)
@@ -98,6 +105,13 @@ namespace ownshot
             if (!Partial) ShowBalloon(OwnShotHelpers.UploadImage(ScreenPath));
             
             SetWindowStyle(!Partial);
+
+            switch (OwnShotHelpers.GetConfig("DeleteMode"))
+            {
+                case "Yes":
+                    File.Delete(ScreenPath);
+                    break;
+            }
         }
 
         void PartOfScreen()
