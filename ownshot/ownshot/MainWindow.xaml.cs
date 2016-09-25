@@ -230,6 +230,11 @@ namespace ownshot
             image.MouseUp -= image1_MouseLeftButtonUp;
             image.MouseMove -= image1_MouseMove;
             selectionRectangle.Width = 0; //workaround
+
+            if (OwnShotHelpers.GetConfig("DeleteMode") == "Yes")
+            {
+                File.Delete(ScreenPath);
+            }
         }
     }
 }
