@@ -85,11 +85,9 @@ namespace ownshot
 
             ShowBalloon(OwnShotHelpers.UploadImage(ScreenPath));
 
-            switch (OwnShotHelpers.GetConfig("DeleteMode"))
+            if (OwnShotHelpers.GetConfig("DeleteMode") == "Yes")
             {
-                case "Yes":
-                    File.Delete(ScreenPath);
-                    break;
+                File.Delete(ScreenPath);
             }
         }
 
@@ -207,12 +205,10 @@ namespace ownshot
                 SetWindowStyle(true);
                 selectionRectangle.Width = 0; //workaround
 
-                switch (OwnShotHelpers.GetConfig("DeleteMode"))
+                if (OwnShotHelpers.GetConfig("DeleteMode") == "Yes")
                 {
-                    case "Yes":
-                        File.Delete(ScreenPath);
-                        File.Delete(PreScreenPath);
-                        break;
+                    File.Delete(ScreenPath);
+                    File.Delete(PreScreenPath);
                 }
             }
             selectionRectangle.Visibility = Visibility.Visible;

@@ -55,10 +55,13 @@ namespace ownshot
             return new string(stringChars);
         }
 
-        public static string GetConfig(string text)
+        public static string GetConfig(string key, string defaultvalue = "NOTFOUND")
         {
+            if (!File.Exists("ownshot.ini"))
+            {
+            }
             var config = File.ReadAllLines("ownshot.ini");
-            var SearchingFor = text + "=";
+            var SearchingFor = key + "=";
             foreach (var line in config)
             {
                 if (line.StartsWith(SearchingFor))
@@ -66,12 +69,13 @@ namespace ownshot
                     return line.Replace(SearchingFor, "");
                 }
             }
-            return "NOTFOUND";
+
+            return defaultvalue;
         }
 
         public static string UploadImage(string ImagePath)
         {
-            var UploadMethod = GetConfig("UploadMethod").Trim();
+            var UploadMethod = GetConfig("UploadMethod", "FTP").Trim();
             if (UploadMethod.ToUpper() == "FTP")
             {
                 try
@@ -146,6 +150,23 @@ namespace ownshot
                     }
                     bitmap.Save(FilePath);
                 }
+            }
+
+            if (OwnShotHelpers.GetConfig("OptimizeImage", "Yes") == "Yes" && File.Exists("optipng.exe"))
+            {
+                var proc = new System.Diagnostics.Process
+                {
+                    StartInfo = new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = "optipng.exe",
+                        Arguments = FilePath,
+                        UseShellExecute = false,
+                        RedirectStandardOutput = false,
+                        CreateNoWindow = true
+                    }
+                };
+                proc.Start();
+                proc.WaitForExit();
             }
         }
     }
