@@ -59,6 +59,7 @@ namespace ownshot
         {
             if (!File.Exists("ownshot.ini"))
             {
+                File.WriteAllText("ownshot.ini", string.Format("UploadMethod=FTP{0}FTPDirectory=ftp://iphere/imagename.png{0}ServerLink=https://serverlinkhere.com/imagename.png{0}FTPUser=FTPUsernameHere{0}FTPPassword=P455Here{0}DeleteMode=Yes", Environment.NewLine));
             }
             var config = File.ReadAllLines("ownshot.ini");
             var SearchingFor = key + "=";
