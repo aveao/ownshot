@@ -1,5 +1,5 @@
 # ownshot
-Simple screen capturing application for Windows and Linux. Captures image, uploads it to your server and gives you a link.
+Simple screen capturing application for Windows, Linux and macOS. Captures image, uploads it to your server and gives you a link.
 
 Wanna setup your own LightShot, puush or gyazo? Here you go! 
 
@@ -7,10 +7,10 @@ Wanna setup your own LightShot, puush or gyazo? Here you go!
 
 [See the wiki](https://github.com/ardaozkal/ownshot/wiki).
 
-###Can I use this on Windows/Linux/Mac OS X?
+###Can I use this on Windows/Linux/macOS?
 
 Windows? Yes.
 
-Linux? With current alpha, yes. It isn't good enough atm though.
+Linux/macOS? mono binaries should work BUT if you have a PHP server and don't want to use ftp and stuff, you can use the experimental ownshot.sh. Just set the configs and install https://github.com/ardaozkal/PHP-FileUploader on your server.
 
-Mac OS X? Probably no, but try the mono binaries of Linux.
+Enjoy!

@@ -10,12 +10,26 @@ function is_mac() {
   uname | grep -q "Darwin"
 }
 
-################ CONFIG ################
+############# BASIC CONFIG #############
 
-icon_path="${HOME}/Pictures/ownshot.png"
+uploadlink="" # example: https://s.ave.zone/upload.php?apikey=no&rand=yes
+open="false" # Open the link? true/false
+edit="false" # Edit before uploading? true/false
+mode="select" # What should be captured? select/window/full
+copy_url="true" # Copy URL after upload? true/false
+keep_file="false" # Keep image after uploading? true/false
+file_dir="${HOME}/Pictures" # Location for images to be saved.
+
+########### END BASIC CONFIG ###########
+
+########### ADVANCED CONFIG ############
 
 file_name_format="ownshot-%Y_%m_%d-%H:%M:%S.png" # when using scrot, must end with .png!
-file_dir="${HOME}/Pictures"
+
+edit_command="gimp %img"
+
+log_file="${HOME}/.ownshot.log"
+icon_path="${HOME}/Pictures/ownshot.png"
 
 upload_connect_timeout="5"
 upload_timeout="120"
@@ -32,19 +46,8 @@ else
   screenshot_full_command="scrot %img"
   open_command="xdg-open %url"
 fi
-open="false"
 
-mode="select"
-edit_command="gimp %img"
-edit="false"
-
-log_file="${HOME}/.ownshot.log"
-uploadlink="" #example: https://s.ave.zone/upload.php?apikey=no&rand=yes
-copy_url="true"
-keep_file="true"
-
-
-############## END CONFIG ##############
+########## END ADVANCED CONFIG ##########
 
 # dependency check
 if [ "${1}" = "--check" ]; then
