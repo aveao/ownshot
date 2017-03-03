@@ -4,7 +4,7 @@
 
 # use with https://github.com/ardaozkal/PHP-FileUploader
 
-current_version="v1.0.0"
+current_version="v1.1.0"
 
 function is_mac() {
   uname | grep -q "Darwin"
@@ -29,7 +29,7 @@ file_name_format="ownshot-%Y_%m_%d-%H:%M:%S.png" # when using scrot, must end wi
 edit_command="gimp %img"
 
 log_file="${HOME}/.ownshot.log"
-icon_path="${HOME}/Pictures/ownshot.png"
+icon_path="${HOME}/Pictures/ownshot.ico"
 
 upload_connect_timeout="5"
 upload_timeout="120"
@@ -74,6 +74,15 @@ fi
 
 # notify <'ok'|'error'> <title> <text>
 function notify() {
+  if [ -f $icon_path ]; 
+    then
+    echo "icon exists, moving on"
+    #exists already
+  else
+    echo "Downloading icon"
+    wget "https://raw.githubusercontent.com/ardaozkal/ownshot/master/ownshot/ownshot/bin/Debug/image.ico" --output-document=$icon_path
+  fi
+
   if is_mac; then
     if which growlnotify &>/dev/null; then
       growlnotify  --icon "${icon_path}" --iconpath "${icon_path}" --title "${2}" --message "${3}"
@@ -82,9 +91,9 @@ function notify() {
     fi
   else
     if [ "${1}" = "error" ]; then
-      notify-send -a OwnShot -u critical -c "im.error" -i "${icon_path}" -t 500 "ownshot: ${2}" "${3}"
+      notify-send -a OwnShot -u critical -c "im.error" -i "${icon_path}" -t 5000 "ownshot: ${2}" "${3}"
     else
-      notify-send -a OwnShot -u low -c "transfer.complete" -i "${icon_path}" -t 500 "ownshot: ${2}" "${3}"
+      notify-send -a OwnShot -u low -c "transfer.complete" -i "${icon_path}" -t 5000 "ownshot: ${2}" "${3}"
     fi
   fi
 }
@@ -146,48 +155,48 @@ function handle_upload_error() {
 
 while [ ${#} != 0 ]; do
   case "${1}" in
-  -h | --help)
-    echo "usage: ${0} [-c | --check | -v | -h]"
-    echo "       ${0} [option]... [file]..."
-    echo ""
-    echo "  -h, --help                   Show this help, exit"
-    echo "  -v, --version                Show current version, exit"
-    echo "      --check                  Check if all dependencies are installed, exit"
-    echo "  -o, --open <true|false>      Override 'open' config"
-    echo "  -e, --edit <true|false>      Override 'edit' config"
-    echo "  -i, --edit-command <command> Override 'edit_command' config (include '%img'), sets --edit 'true'"
-    echo "  -k, --keep-file <true|false> Override 'keep_file' config"
-    echo "  file                         Upload file instead of taking a screenshot"
-    exit 0;;
-  -v | --version)
-    echo "${current_version}"
-    exit 0;;
-  -s | --select)
-    mode="select"
-    shift;;
-  -w | --window)
-    mode="window"
-    shift;;
-  -f | --full)
-    mode="full"
-    shift;;
-  -o | --open)
-    open="${2}"
-    shift 2;;
-  -e | --edit)
-    edit="${2}"
-    shift 2;;
-  -i | --edit-command)
-    edit_command="${2}"
-    edit="true"
-    shift 2;;
-  -k | --keep-file)
-    keep_file="${2}"
-    shift 2;;
-  *)
-    upload_files=("${@}")
-    break;;
-  esac
+    -h | --help)
+echo "usage: ${0} [-c | --check | -v | -h]"
+echo "       ${0} [option]... [file]..."
+echo ""
+echo "  -h, --help                   Show this help, exit"
+echo "  -v, --version                Show current version, exit"
+echo "      --check                  Check if all dependencies are installed, exit"
+echo "  -o, --open <true|false>      Override 'open' config"
+echo "  -e, --edit <true|false>      Override 'edit' config"
+echo "  -i, --edit-command <command> Override 'edit_command' config (include '%img'), sets --edit 'true'"
+echo "  -k, --keep-file <true|false> Override 'keep_file' config"
+echo "  file                         Upload file instead of taking a screenshot"
+exit 0;;
+-v | --version)
+echo "${current_version}"
+exit 0;;
+-s | --select)
+mode="select"
+shift;;
+-w | --window)
+mode="window"
+shift;;
+-f | --full)
+mode="full"
+shift;;
+-o | --open)
+open="${2}"
+shift 2;;
+-e | --edit)
+edit="${2}"
+shift 2;;
+-i | --edit-command)
+edit_command="${2}"
+edit="true"
+shift 2;;
+-k | --keep-file)
+keep_file="${2}"
+shift 2;;
+*)
+upload_files=("${@}")
+break;;
+esac
 done
 
 if [ -z "${upload_files}" ]; then
