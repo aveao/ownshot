@@ -4,7 +4,7 @@
 
 # use with https://github.com/ardaozkal/PHP-FileUploader
 
-current_version="v1.1.0"
+current_version="v1.2.0"
 
 function is_mac() {
   uname | grep -q "Darwin"
@@ -24,7 +24,7 @@ file_dir="${HOME}/Pictures" # Location for images to be saved.
 
 ########### ADVANCED CONFIG ############
 
-file_name_format="ownshot-%Y_%m_%d-%H:%M:%S.png" # when using scrot, must end with .png!
+file_name_format="ownshot-%Y_%m_%d-%H:%M:%S.png"
 
 edit_command="gimp %img"
 
@@ -41,9 +41,9 @@ if is_mac; then
   screenshot_full_command="screencapture %img"
   open_command="open %url"
 else
-  screenshot_select_command="scrot -d 1 -s %img" #added 1 sec delay due to rectangle making its way to 
-  screenshot_window_command="scrot %img"
-  screenshot_full_command="scrot %img"
+  screenshot_select_command="maim -s %img"
+  screenshot_window_command="maim %img"
+  screenshot_full_command="maim %img"
   open_command="xdg-open %url"
 fi
 
@@ -64,7 +64,8 @@ if [ "${1}" = "--check" ]; then
     (which pbcopy &>/dev/null && echo "OK: found pbcopy") || echo "ERROR: pbcopy not found"
   else
     (which notify-send &>/dev/null && echo "OK: found notify-send") || echo "ERROR: notify-send (from libnotify-bin) not found"
-    (which scrot &>/dev/null && echo "OK: found scrot") || echo "ERROR: scrot not found"
+    (which maim &>/dev/null && echo "OK: found maim") || echo "ERROR: maim not found"
+    (which slop &>/dev/null && echo "OK: found slop") || echo "ERROR: slop not found"
     (which xclip &>/dev/null && echo "OK: found xclip") || echo "ERROR: xclip not found"
   fi
   (which curl &>/dev/null && echo "OK: found curl") || echo "ERROR: curl not found"
