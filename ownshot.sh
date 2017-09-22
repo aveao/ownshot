@@ -4,7 +4,7 @@
 
 # use with https://github.com/ardaozkal/PHP-FileUploader
 
-current_version="v1.2.0"
+current_version="v1.3.0"
 
 function is_mac() {
   uname | grep -q "Darwin"
@@ -41,9 +41,9 @@ if is_mac; then
   screenshot_full_command="screencapture %img"
   open_command="open %url"
 else
-  screenshot_select_command="maim -s %img"
-  screenshot_window_command="maim %img"
-  screenshot_full_command="maim %img"
+  screenshot_select_command="maim -u -s %img"
+  screenshot_window_command="maim -u %img"
+  screenshot_full_command="maim -u %img"
   open_command="xdg-open %url"
 fi
 
@@ -67,6 +67,7 @@ if [ "${1}" = "--check" ]; then
     (which maim &>/dev/null && echo "OK: found maim") || echo "ERROR: maim not found"
     (which slop &>/dev/null && echo "OK: found slop") || echo "ERROR: slop not found"
     (which xclip &>/dev/null && echo "OK: found xclip") || echo "ERROR: xclip not found"
+    (which convert &>/dev/null && echo "OK: found imagemagick") || echo "ERROR: imagemagick not found"
   fi
   (which curl &>/dev/null && echo "OK: found curl") || echo "ERROR: curl not found"
   exit 0
@@ -75,13 +76,13 @@ fi
 
 # notify <'ok'|'error'> <title> <text>
 function notify() {
-  if [ -f $icon_path ]; 
+  if [ -f $icon_path ];
     then
     echo "icon exists, moving on"
     #exists already
   else
     echo "Downloading icon"
-    wget "https://raw.githubusercontent.com/ardaozkal/ownshot/master/ownshot/ownshot/bin/Debug/image.ico" --output-document=$icon_path
+    wget "https://raw.githubusercontent.com/aveao/ownshot/master/ownshot/ownshot/bin/Debug/image.ico" --output-document=$icon_path
   fi
 
   if is_mac; then
@@ -94,7 +95,7 @@ function notify() {
     if [ "${1}" = "error" ]; then
       notify-send -a OwnShot -u critical -c "im.error" -i "${icon_path}" -t 5000 "ownshot: ${2}" "${3}"
     else
-      notify-send -a OwnShot -u low -c "transfer.complete" -i "${icon_path}" -t 5000 "ownshot: ${2}" "${3}"
+      notify-send -a OwnShot -u low -c "transfer.complete" -i "/tmp/thumb.png" -t 5000 "ownshot: ${2}" "${3}"
     fi
   fi
 }
@@ -112,6 +113,7 @@ function take_screenshot() {
     notify error "Something went wrong :(" "Information has been logged"
     exit 1
   fi
+  convert -thumbnail 150 ${1} /tmp/thumb.png
 }
 
 function upload_image() {
