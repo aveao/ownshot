@@ -3,11 +3,11 @@ Simple screen capturing application for Windows, Linux and macOS. Captures image
 
 Wanna setup your own LightShot, puush or gyazo? Here you go! 
 
-###How can I use this?
+### How can I use this?
 
 [See the wiki](https://github.com/ardaozkal/ownshot/wiki).
 
-###Can I use this on Windows/Linux/macOS?
+### Can I use this on Windows/Linux/macOS?
 
 Windows? Yes.
 
