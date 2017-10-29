@@ -4,7 +4,7 @@
 
 # use with https://github.com/aveao/PHP-FileUploader
 
-current_version="v1.3.0"
+current_version="v1.4.0"
 
 function is_mac() {
   uname | grep -q "Darwin"
@@ -113,7 +113,9 @@ function take_screenshot() {
     notify error "Something went wrong :(" "Information has been logged"
     exit 1
   fi
-  convert -thumbnail 150 ${1} /tmp/thumb.png
+  if ! is_mac; then
+    convert -thumbnail 150 ${1} /tmp/thumb.png
+  fi
 }
 
 function upload_image() {
