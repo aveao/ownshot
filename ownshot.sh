@@ -1,8 +1,8 @@
 #!/bin/bash
-# https://github.com/ardaozkal/ownshot
+# https://github.com/aveao/ownshot
 # based on https://github.com/jomo/imgur-screenshot
 
-# use with https://github.com/ardaozkal/PHP-FileUploader
+# use with https://github.com/aveao/PHP-FileUploader
 
 current_version="v1.3.0"
 
